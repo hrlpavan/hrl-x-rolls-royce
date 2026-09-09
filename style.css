@@ -1,0 +1,1754 @@
+/* ============================================================================
+   HRL V12 Engine Project - Apple Design System (Day Mode & Dark Mode)
+   Inspired by apple.com, macOS Sequoia & visionOS Glassmorphism
+   Light Studio Default · Zero Emojis · Pure SVG Vector Assets
+   ============================================================================ */
+
+:root {
+  /* Day Mode Default (Light Studio) */
+  --apple-bg: #f5f5f7;
+  --apple-card-bg: rgba(255, 255, 255, 0.82);
+  --apple-dock-bg: rgba(255, 255, 255, 0.88);
+  --apple-border: rgba(0, 0, 0, 0.08);
+  --apple-border-subtle: rgba(0, 0, 0, 0.05);
+  --apple-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --apple-shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.12);
+
+  --apple-blue: #0071e3;
+  --apple-blue-hover: #0077ed;
+  --apple-blue-light: #0071e3;
+  --apple-orange: #ff9500;
+  --apple-red: #ff3b30;
+  --apple-purple: #af52de;
+  --apple-green: #34c759;
+
+  --apple-text-primary: #1d1d1f;
+  --apple-text-secondary: #515154;
+  --apple-text-tertiary: #86868b;
+
+  --apple-canvas-bg: rgba(0, 0, 0, 0.03);
+  --apple-track-bg: rgba(0, 0, 0, 0.06);
+  --apple-pill-bg: rgba(0, 0, 0, 0.04);
+  --apple-pill-border: rgba(0, 0, 0, 0.08);
+  --apple-slider-track: rgba(0, 0, 0, 0.15);
+  --apple-slider-thumb: #ffffff;
+  --apple-slider-thumb-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+
+  --apple-font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --apple-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  --apple-blur: blur(28px) saturate(190%);
+  --apple-radius-sm: 8px;
+  --apple-radius-md: 14px;
+  --apple-radius-lg: 18px;
+  --apple-radius-pill: 980px;
+
+  --apple-transition: all 0.24s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Dark Mode Theme Override */
+[data-theme="dark"] {
+  --apple-bg: #000000;
+  --apple-card-bg: rgba(22, 22, 24, 0.72);
+  --apple-dock-bg: rgba(28, 28, 30, 0.78);
+  --apple-border: rgba(255, 255, 255, 0.12);
+  --apple-border-subtle: rgba(255, 255, 255, 0.07);
+  --apple-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+  --apple-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.6);
+
+  --apple-blue-light: #2997ff;
+  --apple-orange: #ff9f0a;
+  --apple-red: #ff453a;
+  --apple-purple: #bf5af2;
+  --apple-green: #30d158;
+
+  --apple-text-primary: #f5f5f7;
+  --apple-text-secondary: #86868b;
+  --apple-text-tertiary: #6e6e73;
+
+  --apple-canvas-bg: rgba(0, 0, 0, 0.35);
+  --apple-track-bg: rgba(118, 118, 128, 0.24);
+  --apple-pill-bg: rgba(255, 255, 255, 0.04);
+  --apple-pill-border: rgba(255, 255, 255, 0.08);
+  --apple-slider-track: rgba(255, 255, 255, 0.2);
+  --apple-slider-thumb: #ffffff;
+  --apple-slider-thumb-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--apple-bg);
+  font-family: var(--apple-font);
+  color: var(--apple-text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+#app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+#canvas-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* HUD Overlay Layer */
+#hud-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 18px 22px;
+  transition: opacity 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+#hud-overlay.hud-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.apple-nav,
+.apple-inspector,
+.floating-telemetry-chip,
+.zen-exit-chip,
+.apple-dock {
+  pointer-events: auto;
+}
+
+/* ============================================================================
+   TOP NAVIGATION BAR (Apple Floating Glass Ribbon)
+   ============================================================================ */
+.apple-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--apple-card-bg);
+  border: 1px solid var(--apple-border);
+  box-shadow: var(--apple-shadow);
+  border-radius: var(--apple-radius-pill);
+  backdrop-filter: var(--apple-blur);
+  -webkit-backdrop-filter: var(--apple-blur);
+  padding: 0 16px;
+  height: 52px;
+  width: 100%;
+  gap: 12px;
+  transition: var(--apple-transition);
+  flex-wrap: nowrap;
+}
+
+/* Nav Left: Brand & Architecture */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.apple-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: default;
+}
+
+.brand-logo-img {
+  height: 36px;
+  width: auto;
+  aspect-ratio: 500 / 816;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 5px rgba(0, 56, 130, 0.45));
+  border-radius: 4px;
+  transition: transform var(--apple-transition-fast), filter var(--apple-transition-fast);
+  flex-shrink: 0;
+}
+
+.brand-logo-img:hover {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 12px rgba(0, 113, 227, 0.75)) drop-shadow(0 2px 6px rgba(0, 0, 0, 0.4));
+}
+
+.brand-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-title {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--apple-text-primary);
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.brand-subtitle {
+  font-size: 10px;
+  color: var(--apple-text-secondary);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.spec-pill {
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--apple-text-primary);
+  background: var(--apple-pill-bg);
+  padding: 3px 10px;
+  border-radius: var(--apple-radius-pill);
+  border: 1px solid var(--apple-border-subtle);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+/* Nav Center: Heritage & Power Trio */
+.nav-center {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.power-reserve-capsule {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--apple-track-bg);
+  border: 1px solid var(--apple-border-subtle);
+  padding: 3px 10px 3px 6px;
+  border-radius: var(--apple-radius-pill);
+}
+
+.pr-gauge-mini {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pr-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.pr-track {
+  stroke: var(--apple-slider-track);
+  opacity: 0.45;
+}
+
+.pr-fill {
+  stroke: var(--apple-blue-light);
+  transition: stroke-dashoffset 0.12s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.pr-center-label {
+  position: absolute;
+  font-family: var(--apple-mono);
+  font-size: 7.5px;
+  font-weight: 700;
+  color: var(--apple-text-primary);
+  letter-spacing: -0.02em;
+}
+
+.pr-text-stack {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.pr-title {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--apple-text-primary);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+.pr-subtitle {
+  font-size: 8.5px;
+  color: var(--apple-text-secondary);
+  font-family: var(--apple-mono);
+  white-space: nowrap;
+}
+
+.rr-coin-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--apple-track-bg);
+  padding: 4px 10px;
+  border-radius: var(--apple-radius-pill);
+  border: 1px solid var(--apple-border-subtle);
+  color: var(--apple-text-primary);
+  font-size: 11px;
+  cursor: default;
+  white-space: nowrap;
+}
+
+.coin-badge-label {
+  font-weight: 600;
+  color: var(--apple-text-secondary);
+}
+
+.coin-badge-status {
+  font-weight: 600;
+  color: var(--apple-green);
+  letter-spacing: -0.01em;
+}
+
+.rr-boost-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--apple-track-bg);
+  padding: 4px 10px;
+  border-radius: var(--apple-radius-pill);
+  border: 1px solid var(--apple-border-subtle);
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.boost-badge-label {
+  font-weight: 500;
+  color: var(--apple-text-secondary);
+}
+
+.boost-badge-val {
+  font-family: var(--apple-mono);
+  font-weight: 600;
+  color: var(--apple-blue-light);
+}
+
+/* Nav Right: Controls & Toggles */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.rpm-capsule {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--apple-track-bg);
+  border: 1px solid var(--apple-border-subtle);
+  padding: 4px 12px;
+  border-radius: var(--apple-radius-pill);
+}
+
+.rpm-text-group {
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
+}
+
+.rpm-val {
+  font-family: var(--apple-mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--apple-text-primary);
+  letter-spacing: -0.02em;
+  min-width: 38px;
+}
+
+.rpm-unit {
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--apple-text-secondary);
+}
+
+.rpm-capsule .apple-slider {
+  width: 90px;
+}
+
+.apple-audio-widget {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--apple-track-bg);
+  padding: 4px 8px;
+  border-radius: var(--apple-radius-pill);
+  border: 1px solid var(--apple-border-subtle);
+}
+
+.apple-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--apple-text-primary);
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: var(--apple-radius-pill);
+  transition: var(--apple-transition);
+}
+
+.apple-icon-btn:hover {
+  color: var(--apple-blue);
+}
+
+.apple-icon-btn.active {
+  color: var(--apple-blue);
+}
+
+.apple-pill-btn {
+  background: var(--apple-pill-bg);
+  border: 1px solid var(--apple-border);
+  color: var(--apple-text-primary);
+  font-family: var(--apple-font);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--apple-radius-pill);
+  cursor: pointer;
+  transition: var(--apple-transition);
+}
+
+.apple-pill-btn:hover {
+  background: rgba(0, 113, 227, 0.1);
+  color: var(--apple-blue);
+  border-color: var(--apple-blue);
+}
+
+.apple-icon-pill-btn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--apple-track-bg);
+  border: 1px solid var(--apple-border-subtle);
+  color: var(--apple-text-secondary);
+  font-family: var(--apple-font);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 11px;
+  border-radius: var(--apple-radius-pill);
+  cursor: pointer;
+  transition: var(--apple-transition);
+  white-space: nowrap;
+}
+
+.apple-icon-pill-btn:hover {
+  background: rgba(0, 113, 227, 0.08);
+  color: var(--apple-blue);
+  border-color: rgba(0, 113, 227, 0.25);
+}
+
+.apple-icon-pill-btn.active {
+  background: var(--apple-blue);
+  color: #ffffff;
+  border-color: var(--apple-blue);
+}
+
+.apple-icon-circle-btn {
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--apple-track-bg);
+  border: 1px solid var(--apple-border-subtle);
+  border-radius: 50%;
+  color: var(--apple-text-secondary);
+  cursor: pointer;
+  transition: var(--apple-transition);
+  flex-shrink: 0;
+}
+
+.apple-icon-circle-btn:hover {
+  color: var(--apple-text-primary);
+  border-color: var(--apple-border);
+  background: var(--apple-pill-bg);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Theme Segmented Toggle */
+.theme-segment {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.theme-segment .seg-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 9px;
+  font-size: 10.5px;
+}
+
+/* Apple Slider Styling */
+.apple-slider, .apple-mini-slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--apple-slider-track);
+  border-radius: 2px;
+  outline: none;
+  transition: var(--apple-transition);
+}
+
+.apple-mini-slider {
+  width: 60px;
+  height: 3px;
+}
+
+.apple-slider::-webkit-slider-thumb,
+.apple-mini-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--apple-slider-thumb);
+  cursor: pointer;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: var(--apple-slider-thumb-shadow);
+  transition: transform 0.15s ease;
+}
+
+.apple-slider::-webkit-slider-thumb:hover,
+.apple-mini-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+
+/* ============================================================================
+   TELEMETRY DECKS (Apple Glass Cards Left & Right)
+   ============================================================================ */
+/* ============================================================================
+   CONSOLIDATED TELEMETRY INSPECTOR (Apple Floating Glass Palette)
+   ============================================================================ */
+.apple-inspector {
+  position: absolute;
+  top: 72px;
+  right: 22px;
+  width: 320px;
+  max-height: calc(100vh - 155px);
+  background: var(--apple-card-bg);
+  border: 1px solid var(--apple-border);
+  box-shadow: var(--apple-shadow-lg);
+  border-radius: var(--apple-radius-lg);
+  backdrop-filter: var(--apple-blur);
+  -webkit-backdrop-filter: var(--apple-blur);
+  display: flex;
+  flex-direction: column;
+  z-index: 16;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.25s ease;
+}
+
+.apple-inspector.collapsed {
+  transform: translateX(360px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.inspector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px 10px 14px;
+  border-bottom: 1px solid var(--apple-border-subtle);
+  flex-shrink: 0;
+}
+
+.inspector-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.inspector-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--apple-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.inspector-badge {
+  font-family: var(--apple-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--apple-blue);
+  background: rgba(0, 113, 227, 0.1);
+  padding: 2px 7px;
+  border-radius: var(--apple-radius-pill);
+}
+
+.inspector-close-btn {
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--apple-text-tertiary);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: var(--apple-transition);
+}
+
+.inspector-close-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: var(--apple-text-primary);
+}
+
+.inspector-tabs {
+  margin: 8px 10px 6px 10px;
+  background: var(--apple-track-bg);
+  padding: 2px;
+  border-radius: var(--apple-radius-sm);
+  display: flex;
+  gap: 2px;
+  flex-shrink: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.inspector-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.inspector-tabs .seg-btn {
+  flex: 0 0 auto;
+  font-size: 9.5px;
+  padding: 5px 8px;
+  white-space: nowrap;
+  text-align: center;
+  justify-content: center;
+}
+
+.inspector-body {
+  padding: 6px 12px 14px 12px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.inspector-pane {
+  display: none;
+}
+
+.inspector-pane.active {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  animation: fadeIn 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.floating-telemetry-chip {
+  position: absolute;
+  top: 72px;
+  right: 22px;
+  display: none;
+  align-items: center;
+  gap: 6px;
+  background: var(--apple-card-bg);
+  border: 1px solid var(--apple-border);
+  box-shadow: var(--apple-shadow);
+  backdrop-filter: var(--apple-blur);
+  -webkit-backdrop-filter: var(--apple-blur);
+  padding: 6px 14px;
+  border-radius: var(--apple-radius-pill);
+  font-family: var(--apple-font);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--apple-text-primary);
+  cursor: pointer;
+  z-index: 12;
+  transition: var(--apple-transition);
+}
+
+.floating-telemetry-chip.active {
+  display: flex;
+}
+
+.floating-telemetry-chip:hover {
+  box-shadow: var(--apple-shadow-lg);
+  border-color: rgba(0, 113, 227, 0.3);
+  color: var(--apple-blue);
+}
+
+.zen-exit-chip {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  display: none;
+  align-items: center;
+  gap: 6px;
+  background: var(--apple-card-bg);
+  border: 1px solid var(--apple-border);
+  box-shadow: var(--apple-shadow-lg);
+  backdrop-filter: var(--apple-blur);
+  -webkit-backdrop-filter: var(--apple-blur);
+  padding: 8px 16px;
+  border-radius: var(--apple-radius-pill);
+  font-family: var(--apple-font);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--apple-text-primary);
+  cursor: pointer;
+  z-index: 50;
+  transition: var(--apple-transition);
+}
+
+body.zen-active .zen-exit-chip {
+  display: flex;
+}
+
+.zen-exit-chip:hover {
+  border-color: var(--apple-blue);
+  color: var(--apple-blue);
+  box-shadow: var(--apple-shadow-lg);
+  transform: scale(1.04);
+}
+
+.apple-card {
+  background: transparent;
+  padding: 4px 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: var(--apple-transition);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--apple-text-primary);
+}
+
+.card-subtitle {
+  font-size: 9.5px;
+  color: var(--apple-text-secondary);
+}
+
+.card-tag {
+  font-family: var(--apple-mono);
+  font-size: 9px;
+  color: var(--apple-text-secondary);
+  background: var(--apple-pill-bg);
+  padding: 2px 7px;
+  border-radius: var(--apple-radius-pill);
+  border: 1px solid var(--apple-border-subtle);
+}
+
+.card-action-tag {
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--apple-blue);
+  background: rgba(0, 113, 227, 0.1);
+  padding: 2px 7px;
+  border-radius: var(--apple-radius-pill);
+}
+
+.canvas-wrap {
+  border-radius: var(--apple-radius-sm);
+  overflow: hidden;
+  background: var(--apple-canvas-bg);
+  border: 1px solid var(--apple-border-subtle);
+}
+
+.telemetry-canvas {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.interactive-canvas {
+  cursor: ew-resize;
+}
+
+.card-footer-formula {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-family: var(--apple-mono);
+  font-size: 9px;
+  color: var(--apple-text-secondary);
+}
+
+.math-expr {
+  color: var(--apple-blue);
+  background: rgba(0, 113, 227, 0.08);
+  padding: 3px 6px;
+  border-radius: 4px;
+}
+
+.param-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 8.5px;
+  color: var(--apple-text-tertiary);
+  padding-top: 1px;
+}
+
+.param-accent {
+  color: var(--apple-red);
+  font-weight: 500;
+}
+
+.card-footer-info {
+  font-size: 9px;
+  color: var(--apple-text-tertiary);
+  text-align: center;
+}
+
+/* Status Card (Inspector Cylinder Tab) */
+.status-card {
+  padding-bottom: 4px;
+}
+
+.status-pill {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--apple-radius-pill);
+  text-transform: capitalize;
+}
+
+.status-power { background: rgba(255, 59, 48, 0.15); color: var(--apple-red); }
+.status-exhaust { background: rgba(255, 149, 0, 0.15); color: var(--apple-orange); }
+.status-intake { background: rgba(0, 113, 227, 0.15); color: var(--apple-blue); }
+.status-compression { background: rgba(175, 82, 222, 0.15); color: var(--apple-purple); }
+
+.pressure-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 2px 0;
+}
+
+.pressure-main {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.pressure-num {
+  font-family: var(--apple-mono);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--apple-text-primary);
+  line-height: 1;
+}
+
+.pressure-unit-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--apple-text-secondary);
+}
+
+.temp-display {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.temp-label {
+  font-size: 9px;
+  color: var(--apple-text-tertiary);
+}
+
+.temp-val {
+  font-family: var(--apple-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--apple-orange);
+}
+
+.apple-stroke-segment {
+  display: flex;
+  gap: 3px;
+  background: var(--apple-track-bg);
+  padding: 3px;
+  border-radius: var(--apple-radius-sm);
+  border: 1px solid var(--apple-border-subtle);
+}
+
+.seg-item {
+  flex: 1;
+  text-align: center;
+  font-size: 9px;
+  font-weight: 500;
+  color: var(--apple-text-tertiary);
+  padding: 3px 0;
+  border-radius: 4px;
+  transition: var(--apple-transition);
+}
+
+.seg-item.active {
+  background: #ffffff;
+  color: var(--apple-text-primary);
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .seg-item.active {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+.cyl-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 6px;
+  background: var(--apple-canvas-bg);
+  padding: 8px 10px;
+  border-radius: var(--apple-radius-sm);
+  border: 1px solid var(--apple-border-subtle);
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-label {
+  font-size: 8.5px;
+  color: var(--apple-text-tertiary);
+}
+
+.detail-val {
+  font-family: var(--apple-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--apple-text-primary);
+}
+
+.timing-key {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  color: var(--apple-text-secondary);
+  padding-top: 1px;
+}
+
+.timing-key span {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.key-dot { width: 5px; height: 5px; border-radius: 50%; }
+.dot-gray { background: #86868b; }
+
+/* ============================================================================
+   BOTTOM CONTROL DOCK (Apple Floating Dock)
+   ============================================================================ */
+.apple-dock {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--apple-dock-bg);
+  border: 1px solid var(--apple-border);
+  box-shadow: var(--apple-shadow-lg);
+  border-radius: var(--apple-radius-pill);
+  backdrop-filter: var(--apple-blur);
+  -webkit-backdrop-filter: var(--apple-blur);
+  padding: 6px 16px;
+  max-width: 95%;
+  margin: 0 auto;
+  gap: 14px;
+  transition: var(--apple-transition);
+}
+
+.dock-divider {
+  width: 1px;
+  height: 26px;
+  background: var(--apple-border);
+  flex-shrink: 0;
+}
+
+/* Dock Section 1: Controls */
+.dock-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.step-btn-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.playback-btn-cluster {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.apple-circle-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--apple-pill-bg);
+  border: 1px solid var(--apple-border);
+  color: var(--apple-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--apple-transition);
+}
+
+.apple-circle-btn:hover {
+  background: rgba(0, 113, 227, 0.15);
+  color: var(--apple-blue);
+  transform: scale(1.06);
+}
+
+.primary-circle {
+  background: var(--apple-blue);
+  color: #ffffff;
+  border-color: var(--apple-blue);
+}
+
+.primary-circle:hover {
+  background: var(--apple-blue-hover);
+  color: #ffffff;
+}
+
+.btn-sm {
+  font-size: 10px;
+  padding: 4px 8px;
+}
+
+.btn-xs {
+  font-size: 9px;
+  padding: 4px 6px;
+}
+
+.dock-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  color: var(--apple-text-secondary);
+}
+
+.speed-val {
+  font-family: var(--apple-mono);
+  font-size: 9.5px;
+  color: var(--apple-text-primary);
+  font-weight: 600;
+}
+
+/* Dock Section 2: Firing Order */
+.dock-firing-order {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  flex: 1;
+}
+
+.fo-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.fo-heading {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--apple-text-primary);
+  letter-spacing: -0.01em;
+}
+
+.fo-subtext {
+  font-size: 9.5px;
+  color: var(--apple-text-tertiary);
+}
+
+.apple-pill-strip {
+  display: flex;
+  gap: 5px;
+  background: var(--apple-track-bg);
+  padding: 4px 10px;
+  border-radius: var(--apple-radius-pill);
+  border: 1px solid var(--apple-border-subtle);
+}
+
+.fo-pill {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--apple-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--apple-text-secondary);
+  border: 1px solid var(--apple-border-subtle);
+  background: var(--apple-pill-bg);
+  cursor: pointer;
+  transition: var(--apple-transition);
+}
+
+.fo-pill:hover {
+  border-color: var(--apple-blue);
+  color: var(--apple-blue);
+}
+
+.fo-pill.selected {
+  border-color: var(--apple-blue);
+  background: rgba(0, 113, 227, 0.15);
+  color: var(--apple-blue);
+  font-weight: 700;
+}
+
+.fo-pill.firing {
+  background: var(--apple-red);
+  color: #ffffff;
+  border-color: var(--apple-red);
+  box-shadow: 0 0 12px rgba(255, 59, 48, 0.6);
+  transform: scale(1.15);
+}
+
+/* Dock Section 3: Viewports & Segmented Controls */
+.dock-viewports {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 320px;
+}
+
+/* Apple Segmented Control */
+.segmented-control {
+  display: flex;
+  gap: 2px;
+  background: var(--apple-track-bg);
+  padding: 3px;
+  border-radius: var(--apple-radius-pill);
+  border: 1px solid var(--apple-border-subtle);
+}
+
+.seg-btn {
+  background: transparent;
+  border: none;
+  font-family: var(--apple-font);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--apple-text-secondary);
+  padding: 3px 8px;
+  border-radius: var(--apple-radius-pill);
+  cursor: pointer;
+  transition: var(--apple-transition);
+}
+
+.seg-btn:hover {
+  color: var(--apple-text-primary);
+}
+
+.seg-btn.active {
+  background: #ffffff;
+  color: #1d1d1f;
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .seg-btn.active {
+  background: rgba(255, 255, 255, 0.95);
+  color: #000000;
+}
+
+.dock-options-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.apple-toggle-group {
+  display: flex;
+  gap: 3px;
+}
+
+.toggle-pill {
+  background: var(--apple-pill-bg);
+  border: 1px solid var(--apple-border-subtle);
+  font-family: var(--apple-font);
+  font-size: 9.5px;
+  font-weight: 500;
+  color: var(--apple-text-secondary);
+  padding: 3px 8px;
+  border-radius: var(--apple-radius-pill);
+  cursor: pointer;
+  transition: var(--apple-transition);
+}
+
+.toggle-pill:hover {
+  color: var(--apple-text-primary);
+  border-color: var(--apple-border);
+}
+
+.toggle-pill.active {
+  background: rgba(0, 113, 227, 0.12);
+  border-color: var(--apple-blue);
+  color: var(--apple-blue);
+  font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  .apple-dock-side {
+    top: 85px;
+  }
+  .apple-card {
+    width: 230px;
+    padding: 10px;
+  }
+  .spec-pill.muted-pill {
+    display: none;
+  }
+}
+
+/* ============================================================================
+   FLAGSHIP 100X FEATURES: RAYCAST TOOLTIP, EXPLO-VIEW, DYNO & THERMAL
+   ============================================================================ */
+
+/* 3D Raycasting Part Inspector Card (Apple Pro Studio Glass, Anchored Bottom-Left) */
+.part-tooltip-hud {
+  position: absolute;
+  left: 24px;
+  bottom: 86px;
+  pointer-events: auto;
+  z-index: 25;
+  width: 310px;
+  background: var(--apple-card-bg);
+  border: 1px solid var(--apple-border);
+  box-shadow: var(--apple-shadow-lg), 0 0 24px rgba(0, 113, 227, 0.16);
+  border-radius: var(--apple-radius-md);
+  backdrop-filter: var(--apple-blur);
+  -webkit-backdrop-filter: var(--apple-blur);
+  padding: 12px 14px;
+  transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.2, 0.9, 0.3, 1);
+  animation: partCardSlideIn 0.22s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+@keyframes partCardSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1.0);
+  }
+}
+
+.part-tooltip-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--apple-border-subtle);
+  padding-bottom: 6px;
+  gap: 8px;
+}
+
+.tooltip-header-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.tooltip-close-btn {
+  background: transparent;
+  border: none;
+  color: var(--apple-text-tertiary);
+  cursor: pointer;
+  padding: 3px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--apple-transition);
+}
+
+.tooltip-close-btn:hover {
+  color: var(--apple-text-primary);
+  background: var(--apple-track-bg);
+}
+
+.part-tooltip-badge {
+  font-family: var(--apple-mono);
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  color: var(--apple-blue);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+  display: block;
+}
+
+.part-tooltip-title {
+  font-family: var(--apple-font);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--apple-text-primary);
+  margin: 0;
+  letter-spacing: -0.2px;
+}
+
+.part-tooltip-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.part-spec-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  line-height: 1.4;
+}
+
+.part-spec-label {
+  color: var(--apple-text-tertiary);
+  font-family: var(--apple-font);
+}
+
+.part-spec-val {
+  color: var(--apple-text-primary);
+  font-family: var(--apple-mono);
+  font-weight: 500;
+  text-align: right;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.part-tooltip-note {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--apple-border-subtle);
+  font-size: 9.5px;
+  font-style: italic;
+  color: var(--apple-text-secondary);
+  line-height: 1.35;
+}
+
+/* Exploded View Capsule in Dock */
+.dock-exploded-capsule {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--apple-track-bg);
+  border: 1px solid var(--apple-border-subtle);
+  padding: 2px 8px;
+  border-radius: var(--apple-radius-pill);
+}
+
+.exploded-label {
+  font-family: var(--apple-font);
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--apple-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.dock-exploded-capsule input[type="range"] {
+  width: 65px;
+}
+
+.exploded-pct {
+  font-family: var(--apple-mono);
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--apple-blue);
+  min-width: 24px;
+}
+
+/* Dyno Run Pill Button */
+.dyno-run-pill, .accent-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(255, 149, 0, 0.14);
+  border: 1px solid var(--apple-orange);
+  color: var(--apple-orange);
+  font-family: var(--apple-font);
+  font-size: 9.5px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: var(--apple-radius-pill);
+  cursor: pointer;
+  transition: var(--apple-transition);
+}
+
+.dyno-run-pill:hover, .accent-pill:hover {
+  background: var(--apple-orange);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(255, 149, 0, 0.35);
+}
+
+.dyno-running {
+  animation: dynoPulse 1.2s infinite alternate ease-in-out;
+}
+
+@keyframes dynoPulse {
+  0% { transform: scale(1.0); box-shadow: 0 0 4px rgba(255, 149, 0, 0.4); }
+  100% { transform: scale(1.04); box-shadow: 0 0 14px rgba(255, 149, 0, 0.8); }
+}
+
+/* ============================================================================
+   VERSION 2.0 GANESAN IC ENGINES STYLES
+   ============================================================================ */
+.v2-badge {
+  font-family: var(--apple-mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: #0071e3;
+  background: rgba(0, 113, 227, 0.12);
+  border: 1px solid rgba(0, 113, 227, 0.28);
+  padding: 3px 8px;
+  border-radius: var(--apple-radius-pill);
+  white-space: nowrap;
+  letter-spacing: -0.01em;
+}
+
+[data-theme="dark"] .v2-badge {
+  color: #00e5ff;
+  background: rgba(0, 229, 255, 0.12);
+  border-color: rgba(0, 229, 255, 0.32);
+}
+
+.morse-btn-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.morse-cyl-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.morse-cyl-btn {
+  font-family: var(--apple-mono);
+  font-size: 9.5px;
+  font-weight: 600;
+  padding: 5px 0;
+  text-align: center;
+  background: rgba(52, 199, 89, 0.14);
+  border: 1px solid rgba(52, 199, 89, 0.4);
+  color: var(--apple-text-primary);
+  border-radius: var(--apple-radius-sm);
+  cursor: pointer;
+  transition: var(--apple-transition-fast);
+}
+
+.morse-cyl-btn:hover {
+  background: rgba(52, 199, 89, 0.3);
+  transform: translateY(-1px);
+}
+
+.morse-cyl-btn.cut {
+  background: rgba(255, 59, 48, 0.18);
+  border-color: var(--apple-red);
+  color: var(--apple-red);
+  text-decoration: line-through;
+  opacity: 0.75;
+}
+
+/* ==========================================================================
+   Ganesan V2.0 High-Efficiency Atkinson & Lean Burn Mode Styles
+   ========================================================================== */
+
+.eco-toggle-capsule {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--apple-track-bg);
+  padding: 4px 11px;
+  border-radius: var(--apple-radius-pill);
+  border: 1px solid var(--apple-border-subtle);
+  font-size: 11px;
+  white-space: nowrap;
+  cursor: pointer;
+  color: var(--apple-text-primary);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.eco-toggle-capsule:hover {
+  background: rgba(52, 199, 89, 0.12);
+  border-color: rgba(52, 199, 89, 0.4);
+}
+
+.eco-toggle-capsule.active {
+  background: rgba(52, 199, 89, 0.18);
+  border-color: var(--apple-green);
+  box-shadow: 0 0 14px rgba(52, 199, 89, 0.3);
+}
+
+.eco-toggle-capsule.active svg {
+  stroke: var(--apple-green);
+}
+
+.eco-badge-label {
+  font-weight: 500;
+  color: var(--apple-text-secondary);
+}
+
+.eco-badge-status {
+  font-family: var(--apple-mono);
+  font-weight: 600;
+  color: var(--apple-text-primary);
+  transition: color 0.2s ease;
+}
+
+.eco-toggle-capsule.active .eco-badge-status {
+  color: var(--apple-green);
+}
+
+/* Eco Mode Inspector Pane */
+.eco-action-pill {
+  font-family: var(--apple-mono);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--apple-radius-pill);
+  background: rgba(52, 199, 89, 0.15);
+  border: 1px solid rgba(52, 199, 89, 0.4);
+  color: var(--apple-green);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.eco-action-pill:hover {
+  background: rgba(52, 199, 89, 0.25);
+  transform: scale(1.02);
+}
+
+.eco-action-pill.active {
+  background: var(--apple-green);
+  color: #ffffff;
+  border-color: var(--apple-green);
+  box-shadow: 0 2px 8px rgba(52, 199, 89, 0.35);
+}
+
+.eco-hero-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+  padding: 14px 12px;
+  background: linear-gradient(135deg, rgba(52, 199, 89, 0.08) 0%, rgba(0, 113, 227, 0.04) 100%);
+  border: 1px solid rgba(52, 199, 89, 0.25);
+  border-radius: var(--apple-radius-md);
+}
+
+.eco-hero-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.eco-stat-large {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.eco-big-num {
+  font-family: var(--apple-mono);
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--apple-green);
+  line-height: 1;
+}
+
+.eco-big-unit {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--apple-text-secondary);
+}
+
+.eco-hero-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--apple-mono);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 9px;
+  border-radius: var(--apple-radius-pill);
+  background: rgba(52, 199, 89, 0.2);
+  color: var(--apple-green);
+  border: 1px solid rgba(52, 199, 89, 0.35);
+}
+
+.eco-metrics-triple {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.eco-metric-box {
+  background: var(--apple-card-bg);
+  border: 1px solid var(--apple-border-subtle);
+  border-radius: var(--apple-radius-sm);
+  padding: 6px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
+.eco-sub-label {
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--apple-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.eco-sub-val {
+  font-family: var(--apple-mono);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--apple-text-primary);
+}
+
+.highlight-green {
+  color: var(--apple-green) !important;
+  font-weight: 700 !important;
+}
+
+/* Ganesan Principles Scroll List */
+.ganesan-rules-scroll {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  max-height: 240px;
+  overflow-y: auto;
+  padding-right: 4px;
+  margin-top: 4px;
+}
+
+.ganesan-rule-item {
+  background: var(--apple-track-bg);
+  border: 1px solid var(--apple-border-subtle);
+  border-radius: var(--apple-radius-sm);
+  padding: 8px 10px;
+  transition: all 0.2s ease;
+}
+
+.ganesan-rule-item:hover {
+  background: var(--apple-card-hover);
+  border-color: rgba(52, 199, 89, 0.3);
+}
+
+.ganesan-rule-item.verified {
+  border-left: 3px solid var(--apple-green);
+}
+
+.rule-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+  flex-wrap: wrap;
+}
+
+.rule-num {
+  font-family: var(--apple-mono);
+  font-size: 9px;
+  font-weight: 700;
+  background: rgba(52, 199, 89, 0.2);
+  color: var(--apple-green);
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rule-title {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--apple-text-primary);
+  flex: 1;
+}
+
+.rule-badge {
+  font-family: var(--apple-mono);
+  font-size: 8.5px;
+  font-weight: 600;
+  color: var(--apple-blue);
+  background: rgba(0, 113, 227, 0.1);
+  padding: 1px 6px;
+  border-radius: var(--apple-radius-pill);
+}
+
+.rule-desc {
+  font-size: 10px;
+  line-height: 1.35;
+  color: var(--apple-text-secondary);
+  margin: 0;
+}
+
